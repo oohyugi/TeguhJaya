@@ -8,10 +8,30 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Karyawan</h3>
+              
             </div>
+             <div class="box-body">
+             <?php if(Session::has('message')): ?>
+
+  <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                <?php echo e(Session::get('message')); ?>
+
+              </div>
+        </div>
+
+
+
+          <?php endif; ?>
+            </div>
+             
             <!-- /.box-header -->
+           
+
             <div class="box-body">
-               <button type="submit" class="btn btn-primary">Tambah Karyawan</button>
+              <a href="<?php echo e(url('/admin/karyawan/create')); ?>"><button type="submit" class="btn btn-primary">Tambah Karyawan</button>
+              </a> 
             </div>
            
             <div class="box-body">

@@ -20,5 +20,9 @@ Route::get('admin/test', 'TestController@index');
 Auth::routes();
 
 Route::get('admin','AdminController@index');
-Route::get('admin/karyawan','KaryawanController@index');
+Route::group(['middleware'=> ['web']],function(){
+Route::resource('admin/karyawan','KaryawanController');
+});
+
+// Route::get('admin/tambahkaryawan','KaryawanController@create');
 Route::get('/home', 'HomeController@index');

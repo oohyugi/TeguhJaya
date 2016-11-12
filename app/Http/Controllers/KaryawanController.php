@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Validator;
+use Illuminate\Support\Facades\Auth;
 
 class KaryawanController extends Controller
 {
@@ -20,19 +22,58 @@ class KaryawanController extends Controller
     public function index()
     {
         $data =User::all();
-        return view('karyawan',['data'=> $data]);    
+        if (Auth::user()->jabatan == 'Super Admin') {
+            return view('karyawan',['data'=> $data]); 
+        }else{
+            abort(404, 'The resource you are looking for could not be found');
+        }
+           
     }
+
+    // protected function validator(array $data)
+    // {
+    //     return Validator::make($data, [
+    //         'name' => 'required|max:255',
+    //         'username'=> 'required|unique:users',
+    //         'email' => 'required|email|max:255|unique:users',
+    //         'jabatan' => 'required',
+    //         'password' => 'required|min:6|confirmed',
+
+    //     ]);
+    // }
+    
 
     /**
-     * Show the form for creating a new resource.
+     * Create a new user instance after a valid registration.
      *
-     * @return \Illuminate\Http\Response
+     * @param  array  $data
+     * @return User
      */
-    public function create()
+
+    protected function create()
     {
-        //
+        // User::create([
+        //     'name' => $data['name'],
+        //     'username'=>$data['username'],
+        //     'email' => $data['email'],
+        //     'jabatan' => $data['jabatan'],
+        //     'password' => bcrypt($data['password']),
+        // ]);
+
+        return view('tambahkaryawan');
     }
 
+ protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'username'=> 'required|unique:users',
+            'email' => 'required|email|max:255|unique:users',
+            'jabatan' => 'required',
+            'password' => 'required|min:6|confirmed',
+
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -41,7 +82,15 @@ class KaryawanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $users = new User;
+        $users->name =$request->name;
+        $users->email =$request->email;
+        $users->username =$request->username;
+        $users->jabatan =$request->jabatan;
+        $users->password =$request->password;
+        $users->save();
+        return redirect('/admin/karyawan')->with('message', 'Data berhasil ditambahkan!');
+
     }
 
     /**

@@ -10,10 +10,29 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Karyawan</h3>
+              
             </div>
+             <div class="box-body">
+             @if (Session::has('message'))
+
+  <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                {{ Session::get('message') }}
+              </div>
+        </div>
+
+
+
+          @endif
+            </div>
+             
             <!-- /.box-header -->
+           
+
             <div class="box-body">
-               <button type="submit" class="btn btn-primary">Tambah Karyawan</button>
+              <a href="{{url('/admin/karyawan/create')}}"><button type="submit" class="btn btn-primary">Tambah Karyawan</button>
+              </a> 
             </div>
            
             <div class="box-body">
