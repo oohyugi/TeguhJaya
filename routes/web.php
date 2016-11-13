@@ -19,10 +19,10 @@ Route::get('admin/test', 'TestController@index');
 
 Auth::routes();
 
-Route::get('admin','AdminController@index');
+Route::get('/admin','AdminController@index');
 Route::group(['middleware'=> ['web']],function(){
 
-	Route::resource('admin/karyawan','KaryawanController');
+	Route::resource('/admin/karyawan','KaryawanController');
 });
 
 Route::group(['middleware'=> ['web']],function(){
