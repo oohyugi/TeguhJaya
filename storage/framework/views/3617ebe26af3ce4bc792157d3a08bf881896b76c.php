@@ -34,7 +34,7 @@
       <ul class="sidebar-menu">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="<?php echo e(url('/admin/test')); ?> "><i class="fa fa-list-alt"></i> <span>Barang Gudang</span></a></li>
+        <li class="active"><a href="<?php echo e(url('admin/gudang')); ?> "><i class="fa fa-list-alt"></i> <span>Barang Gudang</span></a></li>
         <li><a href="#"><i class="fa fa-list-alt"></i> <span>Barang Toko</span></a></li>
          <li><a href="#"><i class="fa fa-plus"></i> <span>Entry Penjualan</span></a></li>
 

@@ -21,7 +21,13 @@ Auth::routes();
 
 Route::get('admin','AdminController@index');
 Route::group(['middleware'=> ['web']],function(){
-Route::resource('admin/karyawan','KaryawanController');
+
+	Route::resource('admin/karyawan','KaryawanController');
+});
+
+Route::group(['middleware'=> ['web']],function(){
+
+	Route::resource('admin/gudang','GudangController');
 });
 
 // Route::get('admin/tambahkaryawan','KaryawanController@create');

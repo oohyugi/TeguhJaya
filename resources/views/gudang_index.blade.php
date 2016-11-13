@@ -1,12 +1,12 @@
 @extends('admin')
 @section('page')
 <h1>
-        Karyawan
-        <small>Data karyawan</small>
+        Stok Gudang
+        <small>Semua barang yang ada di gudang</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('/admin')}}"><i class="fa fa-dashboard"></i> Admin</a></li>
-        <li class="active">karyawan</li>
+        <li class="active">Stok Gudang</li>
       </ol>
 @endsection
 @section('content')
@@ -59,6 +59,7 @@
                        
 
           <div class="box">
+          
              <div class="box-body">
              @if (Session::has('message'))
 
@@ -78,7 +79,7 @@
            
 
             <div class="box-body">
-              <a href="{{url('/admin/karyawan/create')}}"><button type="submit" class="btn btn-primary">Tambah Karyawan</button>
+              <a href="{{url('/admin/karyawan/create')}}"><button type="submit" class="btn btn-primary">Tambah Stok</button>
               </a> 
             </div>
            
@@ -87,25 +88,55 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Nama Karyawan</th>
-                  <th>Username</th>
-                  <th>Email</th>
+                  <th>Nama Barang</th>
+                  <th>Pabrik</th>
+                  <th>Jumlah Barang</th>
+                  <th>Harga Bawah</th>
+                  <th>Harga Atas</th>
                   <th>Action</th>
                  
                 </tr>
                 </thead>
                 <tbody>
+
                   @foreach($data as $value)
+                  <?php 
+
+           // $jumlah_barang = $value->jumlah_barang;
+            if ($value->jumlah_barang >=12 ) {
+               // $jumlah_barang = (number_format($value->jumlah_barang/12,0))." Lusin";
+
+               $lusin = (floor($value->jumlah_barang/12));
+               $pcs = ($value->jumlah_barang%12);
+               if ($pcs != 0) {
+                    $jumlah_barang = $lusin. " Lusin  "."+  ". $pcs. " Pcs";
+               }else{
+                $jumlah_barang = $lusin. " Lusin  ";
+               }
+              
+
+
+            }else{
+                $jumlah_barang = ($value->jumlah_barang). " Pcs"; 
+            }
+              //Format uang
+            $harga_bawah ="Rp. ".number_format($value->harga_bawah,'0',',','.')."-";
+             $harga_atas = "Rp. ".number_format($value->harga_atas,'0',',','.')."-";
+
+             ?>
                 <tr>
-                  <td>{{$value->name}}</td>
-                  <td>{{$value->username}}
+                  <td>{{$value->nama_barang}}</td>
+                  <td>{{$value->pabrik}}
                   </td>
-                  <td>{{$value->email}}</td>
-                  <td>  
+                   
+                  <td>{{$jumlah_barang }}</td>
+                  
+                  <td> {{$harga_bawah}}</td>
+                  <td> {{$harga_atas}}</td>
 
                      
                       
-                     
+                     <td>
 
                        <form class="form-horizontal" action="/admin/karyawan/{{$value->id}}"  method="post" >
                       {{ csrf_field() }}
@@ -118,8 +149,7 @@
                           <span class="glyphicon glyphicon-trash"></span> Hapus
                       </button>
  -->
-                       <a href="{{route('karyawan.edit', $value->id)}}" class="btn btn-warning" > <span class="glyphicon glyphicon-pencil"></span> Edit
-                      </a>
+                       <a href="{{route('karyawan.edit', $value->id)}}" class="btn btn-primary">Edit</a>
                     
                       <button type="submit" class="btn btn-danger" onclick="return confirm('Anda yakin akan menghapus data ?');" value="Delete"><span class="glyphicon glyphicon-trash"></span> Hapus </button> 
                       </form>
